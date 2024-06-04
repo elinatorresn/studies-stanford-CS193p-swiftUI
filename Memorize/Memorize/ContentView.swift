@@ -8,12 +8,14 @@
 import SwiftUI //em todos os arquivos que tem UI (tela) tem q ser importado o swiftUI
 
 struct ContentView: View {
+    let emojis: [String] = ["👻", "🎃", "🕷️", "🍭"]
+    
     var body: some View {
         HStack{
-            CardView(isFaceUp: true)
-            CardView()
-            CardView()
-            CardView()
+            CardView(content: emojis[0], isFaceUp: true)
+            CardView(content: emojis[1])
+            CardView(content: emojis[2])
+            CardView(content: emojis[3])
         }
         .foregroundColor(.orange)
         .padding()
@@ -21,6 +23,7 @@ struct ContentView: View {
 }
 
 struct CardView: View {
+    let content: String
     @State var isFaceUp: Bool = false //se deixar como let isFaceUp não pode mudar entre false and true
     
     var body: some View {
@@ -30,7 +33,7 @@ struct CardView: View {
             if isFaceUp {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text("👻").font(.largeTitle)
+                Text(content).font(.largeTitle)
             } else {
                 base.fill()
             }
