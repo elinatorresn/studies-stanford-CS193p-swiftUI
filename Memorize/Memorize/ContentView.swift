@@ -12,10 +12,9 @@ struct ContentView: View {
     
     var body: some View {
         HStack{
-            CardView(content: emojis[0], isFaceUp: true)
-            CardView(content: emojis[1])
-            CardView(content: emojis[2])
-            CardView(content: emojis[3])
+            ForEach(0..<4, id: \.self) { index in
+                CardView(content: emojis[index])
+            }
         }
         .foregroundColor(.orange)
         .padding()
@@ -24,7 +23,7 @@ struct ContentView: View {
 
 struct CardView: View {
     let content: String
-    @State var isFaceUp: Bool = false //se deixar como let isFaceUp não pode mudar entre false and true
+    @State var isFaceUp: Bool = true //se deixar como let isFaceUp não pode mudar entre false and true
     
     var body: some View {
         ZStack {
