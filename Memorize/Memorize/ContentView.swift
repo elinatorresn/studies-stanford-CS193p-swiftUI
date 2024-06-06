@@ -8,11 +8,11 @@
 import SwiftUI //em todos os arquivos que tem UI (tela) tem q ser importado o swiftUI
 
 struct ContentView: View {
-    let emojis: [String] = ["👻", "🎃", "🕷️", "🍭"]
+    let emojis: [String] = ["👻", "🎃", "🕷️", "💀", "🍭", "😱", "😈", "🧙🏻", "👹", "🕸️", "🙀", "☠️"]
     
     var body: some View {
         HStack{
-            ForEach(0..<4, id: \.self) { index in
+            ForEach(emojis.indices, id: \.self) { index in
                 CardView(content: emojis[index])
             }
         }
