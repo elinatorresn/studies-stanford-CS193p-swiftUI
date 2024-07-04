@@ -18,9 +18,11 @@ struct EmojiMemoryGameView: View {
             Text("Memorize!").font(.largeTitle)
             cards
                 .foregroundColor(viewModel.color)
-                .animation(.default, value: viewModel.cards)
             Button("Shuffle"){
-                viewModel.shuffle()
+                withAnimation() {
+                    viewModel.shuffle()
+                }
+                
             }
         }
         .padding()
@@ -29,10 +31,12 @@ struct EmojiMemoryGameView: View {
     private var cards: some View {
         AspectVGrid(viewModel.cards, aspectRatio: aspectRatio) { card in
             CardView(card)
-            .padding(spacing)
-            .onTapGesture {
-                viewModel.choose(card)
-            }
+                .padding(spacing)
+                .onTapGesture {
+                    withAnimation() {
+                        viewModel.choose(card)
+                    }
+                }
         }
     }
 }

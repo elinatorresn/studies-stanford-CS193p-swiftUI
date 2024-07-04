@@ -25,10 +25,11 @@ struct CardView: View {
                     .minimumScaleFactor(Constants.FontSize.scaleFactor)
                     .multilineTextAlignment(.center)
                     .aspectRatio(1, contentMode: .fit)
+                    .padding(Constants.Pie.inset)
             )
             .padding(Constants.Pie.inset)
             .cardify(isFaceUp: card.isFaceUp)
-        .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
+            .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
     }
     
     private struct Constants {
