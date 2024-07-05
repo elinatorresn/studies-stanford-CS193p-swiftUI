@@ -9,10 +9,11 @@ import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
+    private(set) var score = 0
     
     init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
         cards = []
-        for pairIndex in 0..<max(9, numberOfPairsOfCards) {
+        for pairIndex in 0..<max(2, numberOfPairsOfCards) {
             let content = cardContentFactory(pairIndex)
             cards.append(Card(content: content, id: "\(pairIndex+1)a"))
             cards.append(Card(content: content, id: "\(pairIndex+1)b"))
@@ -21,12 +22,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     var indexOfTheOneAndOnlyFaceUpCard : Int? {
-        get {
-            return cards.indices.filter { index in cards[index].isFaceUp }.only
-        }
-        set {
-            cards.indices.forEach { cards[$0].isFaceUp = (newValue == $0) }
-        }
+        get { cards.indices.filter { index in cards[index].isFaceUp }.only }
+        set { cards.indices.forEach { cards[$0].isFaceUp = (newValue == $0) } }
     }
     
     mutating func choose(_ card: Card){
@@ -35,9 +32,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 if let potencialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
                     if cards[chosenIndex].content == cards[potencialMatchIndex].content{
                         cards[chosenIndex].isMatched = true
-                        cards[chosenIndex].isMatched = true
+                        cards[potencialMatchIndex].isMatched = true
+                        score += 2
                     }
-                    indexOfTheOneAndOnlyFaceUpCard = nil
                 } else {
                     indexOfTheOneAndOnlyFaceUpCard = chosenIndex
                 }
@@ -63,11 +60,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     struct Card: Equatable, Identifiable, CustomDebugStringConvertible {
         var isFaceUp = false
         var isMatched = false
+//        var hasBeenSeen = false
         let content: CardContent
         
         var id: String
         var debugDescription: String {
-            "\(id): \(content) \(isFaceUp ? "up" : "down")\(isMatched ? "matched" : "")"
+            "\(id): \(content) \(isFaceUp ? "up" : "down") \(isMatched ? "matched" : "")"
         }
     }
 }
